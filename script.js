@@ -1,12 +1,19 @@
-let currentPlayer = "X";
-let currentPlayerTurn = document.getElementById("turn");
 let moves = 1;
+let xScore = 0;
+let oScore = 0;
+let currentPlayer = "X";
+const currentPlayerTurn = document.getElementById("turn");
+const resetButton = document.getElementById("replay");
+const gameGrid = document.getElementById('grid').getElementsByTagName('div');
+document.getElementById("xScore").innerHTML = xScore;
+document.getElementById("oScore").innerHTML = oScore;
 
+// Asign a function to every cell in the grid.
+const cellsFunction = document.querySelectorAll('.cell').forEach(cell => cell.addEventListener("click", gameStatus));
+
+// Display the sign of the current player in the chosen box, counting the number of played cells and display whose player's turn it is.
 function gameStatus(clickedCellEvent) {
   const clickedCell = clickedCellEvent.target;
-  if (moves < 10) {
-    document.getElementById("replay").disabled = false;
-  }
   if (moves % 2 != 0) {
     currentPlayer = "X";
     clickedCell.innerHTML = currentPlayer;
@@ -20,119 +27,99 @@ function gameStatus(clickedCellEvent) {
   winner();
 }
 
+// Check which player won the game.
 function winner() {
-  const cellOne = document.getElementById("box-one");
-  const cellTwo = document.getElementById("box-two");
-  const cellThree = document.getElementById("box-three");
-  const cellFor = document.getElementById("box-for");
-  const cellFive = document.getElementById("box-five");
-  const cellSix = document.getElementById("box-six");
-  const cellSeven = document.getElementById("box-seven");
-  const cellEight = document.getElementById("box-eigth");
-  const cellNine = document.getElementById("box-nine");
 
-  let xWin = false;
-  if (cellOne.textContent == "X" && cellTwo.textContent == "X" && cellThree.textContent == "X") {
-    xWin = true;
-    cellOne.style.backgroundColor = "green";
-    cellTwo.style.backgroundColor = "green";
-    cellThree.style.backgroundColor = "green";
-  } else if (cellFor.textContent == "X" && cellFive.textContent == "X" && cellSix.textContent == "X") {
-    xWin = true;
-    cellFor.style.backgroundColor = "green";
-    cellFive.style.backgroundColor = "green";
-    cellSix.style.backgroundColor = "green";
-  } else if (cellSeven.textContent == "X" && cellEight.textContent == "X" && cellNine.textContent == "X") {
-    xWin = true;
-    cellSeven.style.backgroundColor = "green";
-    cellEight.style.backgroundColor = "green";
-    cellNine.style.backgroundColor = "green";
-  } else if (cellOne.textContent == "X" && cellFor.textContent == "X" && cellSeven.textContent == "X") {
-    xWin = true;
-    cellOne.style.backgroundColor = "green";
-    cellFor.style.backgroundColor = "green";
-    cellSeven.style.backgroundColor = "green";
-  } else if (cellTwo.textContent == "X" && cellFive.textContent == "X" && cellEight.textContent == "X") {
-    xWin = true;
-    cellTwo.style.backgroundColor = "green";
-    cellFive.style.backgroundColor = "green";
-    cellEight.style.backgroundColor = "green";
-  } else if (cellThree.textContent == "X" && cellSix.textContent == "X" && cellNine.textContent == "X") {
-    xWin = true;
-    cellThree.style.backgroundColor = "green";
-    cellSix.style.backgroundColor = "green";
-    cellNine.style.backgroundColor = "green";
-  } else if (cellOne.textContent == "X" && cellFive.textContent == "X" && cellNine.textContent == "X") {
-    xWin = true;
-    cellOne.style.backgroundColor = "green";
-    cellFive.style.backgroundColor = "green";
-    cellNine.style.backgroundColor = "green";
-  } else if (cellThree.textContent == "X" && cellFive.textContent == "X" && cellSeven.textContent == "X") {
-    xWin = true;
-    cellThree.style.backgroundColor = "green";
-    cellFive.style.backgroundColor = "green";
-    cellSeven.style.backgroundColor = "green";
-  }
-
-  if (xWin === true) {
-    currentPlayerTurn.innerHTML = "X PLAYER WIN";
+  // Variables that help me find out if the game ends in a tie
+  let xWin = false, oWin = false;
+  // Check if I have a complete line with the same sign.
+  for (let i = 0; i < 3; i += 3) {
+    let firstLineElement = gameGrid[i].textContent;
+    let secLineElement = gameGrid[i + 1].textContent;
+    let thirdLineElement = gameGrid[i + 2].textContent;
+    if (firstLineElement == "X" && secLineElement == "X" && thirdLineElement == "X") {
+      currentPlayerTurn.innerHTML = "X PLAYER WIN";
+      xWin = true;
+      break;
+    } else if (firstLineElement == "O" && secLineElement == "O" && thirdLineElement == "O") {
+      currentPlayerTurn.innerHTML = "O PLAYER WIN";
+      oWin = true;
+      break;
+    }
   }
   
-  let oWin = false;
-  if (cellOne.textContent == "O" && cellTwo.textContent == "O" && cellThree.textContent == "O") {
-    oWin = true;
-    cellOne.style.backgroundColor = "green";
-    cellTwo.style.backgroundColor = "green";
-    cellThree.style.backgroundColor = "green";
-  } else if (cellFor.textContent == "O" && cellFive.textContent == "O" && cellSix.textContent == "O") {
-    oWin = true;
-    cellFor.style.backgroundColor = "green";
-    cellFive.style.backgroundColor = "green";
-    cellSix.style.backgroundColor = "green";
-  } else if (cellSeven.textContent == "O" && cellEight.textContent == "O" && cellNine.textContent == "O") {
-    oWin = true;
-    cellSeven.style.backgroundColor = "green";
-    cellEight.style.backgroundColor = "green";
-    cellNine.style.backgroundColor = "green";
-  } else if (cellOne.textContent == "O" && cellFor.textContent == "O" && cellSeven.textContent == "O") {
-    oWin = true;
-    cellOne.style.backgroundColor = "green";
-    cellFor.style.backgroundColor = "green";
-    cellSeven.style.backgroundColor = "green";
-  } else if (cellTwo.textContent == "O" && cellFive.textContent == "O" && cellEight.textContent == "O") {
-    oWin = true;
-    cellTwo.style.backgroundColor = "green";
-    cellFive.style.backgroundColor = "green";
-    cellEight.style.backgroundColor = "green";
-  } else if (cellThree.textContent == "O" && cellSix.textContent == "O" && cellNine.textContent == "O") {
-    oWin = true;
-    cellThree.style.backgroundColor = "green";
-    cellSix.style.backgroundColor = "green";
-    cellNine.style.backgroundColor = "green";
-  } else if (cellOne.textContent == "O" && cellFive.textContent == "O" && cellNine.textContent == "O") {
-    oWin = true;
-    cellOne.style.backgroundColor = "green";
-    cellFive.style.backgroundColor = "green";
-    cellNine.style.backgroundColor = "green";
-  } else if (cellThree.textContent == "O" && cellFive.textContent == "O" && cellSeven.textContent == "O") {
-    oWin = true;
-    cellThree.style.backgroundColor = "green";
-    cellFive.style.backgroundColor = "green";
-    cellSeven.style.backgroundColor = "green";
+  // Check if I have a complete column with the same sign.
+  for (let i = 0; i < 3; ++i) {
+    let firstColElement = gameGrid[i].textContent;
+    let secColElement = gameGrid[i + 3].textContent;
+    let thirdColElement = gameGrid[i + 6].textContent;
+    if (firstColElement == "X" && secColElement == "X" && thirdColElement == "X") {
+      currentPlayerTurn.innerHTML = "X PLAYER WIN";
+      xWin = true;
+      break;
+    } else if (firstColElement == "O" && secColElement == "O" && thirdColElement == "O") {
+      currentPlayerTurn.innerHTML = "O PLAYER WIN";
+      oWin = true;
+      break;
+    }
   }
-
-  if (oWin === true) {
+  
+  // Store diagonal elements in variables.
+  let firstMainDiagElement = gameGrid[0].textContent;
+  let secondMainDiagElement = gameGrid[4].textContent;
+  let thirdMainDiagElement = gameGrid[8].textContent;
+  let firstSecDiagElement = gameGrid[2].textContent;
+  let secondSecDiagElement = gameGrid[4].textContent;
+  let thirdSecDiagElement = gameGrid[6].textContent;
+  
+  // Check if I have a complete diagonal with the same sign.
+  if (firstMainDiagElement == "X" && secondMainDiagElement == "X" && thirdMainDiagElement == "X") {
+    currentPlayerTurn.innerHTML = "X PLAYER WIN";
+    xWin = true;
+  } else if (firstMainDiagElement == "O" && secondMainDiagElement == "O" && thirdMainDiagElement == "O") {
     currentPlayerTurn.innerHTML = "O PLAYER WIN";
+    oWin = true;
+  } else if (firstSecDiagElement == "X" && secondSecDiagElement == "X" && thirdSecDiagElement == "X") {
+    currentPlayerTurn.innerHTML = "X PLAYER WIN";
+    xWin = true;
+  } else if (firstSecDiagElement == "O" && secondSecDiagElement == "O" && thirdSecDiagElement == "O") {
+    currentPlayerTurn.innerHTML = "O PLAYER WIN";
+    oWin = true;
   }
 
-  if (xWin === false && oWin === false && moves === 10) {
+  if (xWin == true) {
+    ++xScore;
+    document.getElementById("xScore").innerHTML = xScore;
+  } else if (oWin == true) {
+    ++oScore;
+    document.getElementById("oScore").innerHTML = oScore;
+  }
+  if (xScore > 0 || oScore > 0) {
+    document.getElementById("resetScore").disabled = false;
+  }
+
+  // Check if the game it's end with a tie
+  let tieGame = false;
+  if (xWin == false && oWin == false && moves === 10) {
     currentPlayerTurn.innerHTML = "TIE";
-    document.getElementById("grid").style.backgroundColor = "yellow";
+    tieGame = true;
+  }
+  // If the game is over, the reset button will be activated
+  if (xWin == true || oWin == true || tieGame == true) {
+    resetButton.disabled = false;
   }
 }
-
+  
+// Reset the game.
 function resetGame () {
+  for (let i = 0; i < gameGrid.length; ++i) {
+    gameGrid[i].innerHTML = "";
+  }
+  currentPlayerTurn.innerHTML = "Tic Tac Toe";
+  moves = 1;
+}
+
+// Reset the score
+function resetScore() {
   location.reload();
 }
-
-document.querySelectorAll('.cell').forEach(cell => cell.addEventListener("click", gameStatus));
