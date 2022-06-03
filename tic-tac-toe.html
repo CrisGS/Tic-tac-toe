@@ -8,6 +8,10 @@
   </head>
   <body>
     <span id="turn">Tic Tac Toe</span>
+    <div id="score">
+    <div>X: <span id="xScore"></span></div><br>
+    <div>O: <span id="oScore"></span></div>
+    </div>
     <div class="game-board" id="grid">
       <div class="cell" id="box-one"></div>
       <div class="cell" id="box-two"></div>
@@ -20,6 +24,7 @@
       <div class="cell" id="box-nine"></div>
     </div>
     <button class="resetBtn" id="replay" disabled="true" onclick="resetGame()">Play Again</button>
+    <button id="resetScore" disabled="true" onclick="resetScore()">Reset Score</button>
     <script type="text/javascript" src="D:\My Projects\tic-tac-toe\script.js"></script>
   </body>
 </html>
