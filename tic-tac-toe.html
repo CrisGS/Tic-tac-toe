@@ -7,24 +7,32 @@
     <title>Tic-Tac-Toe</title>
   </head>
   <body>
-    <span id="turn">Tic Tac Toe</span>
-    <div id="score">
-    <div>X: <span id="xScore"></span></div><br>
-    <div>O: <span id="oScore"></span></div>
+    <span id="chooseSignMsg"><strong>Please, choose a sign!</strong></span>
+    <div id="chooseSign">
+      <button id="xSignButton" value="1" onclick="chooseSign(this.value)">X</button>
+      <button id="oSignButton" value="2" onclick="chooseSign(this.value)">O</button>
     </div>
-    <div class="game-board" id="grid">
-      <div class="cell" id="box-one"></div>
-      <div class="cell" id="box-two"></div>
-      <div class="cell" id="box-three"></div>
-      <div class="cell" id="box-for"></div>
-      <div class="cell" id="box-five"></div>
-      <div class="cell" id="box-six"></div>
-      <div class="cell" id="box-seven"></div>
-      <div class="cell" id="box-eigth"></div>
-      <div class="cell" id="box-nine"></div>
+    <div id="gameContent">
+      <span id="turn">Tic Tac Toe</span>
+      <div id="score">
+      <div>X: <span id="xScore"></span></div><br>
+      <div>O: <span id="oScore"></span></div>
+      </div>
+      <div class="game-board" id="grid">
+        <div class="cell" id="box-one"></div>
+        <div class="cell" id="box-two"></div>
+        <div class="cell" id="box-three"></div>
+        <div class="cell" id="box-for"></div>
+        <div class="cell" id="box-five"></div>
+        <div class="cell" id="box-six"></div>
+        <div class="cell" id="box-seven"></div>
+        <div class="cell" id="box-eigth"></div>
+        <div class="cell" id="box-nine"></div>
+      </div>
+      <button class="resetBtn" id="replay" disabled="true" onclick="resetGame()">Play Again</button>
+      <button id="resetScore" disabled="true" onclick="resetScore()">Reset Score</button>
+      <button id="anotherSignButton" onclick="chooseSignAgain()">Choose another sign</button>
     </div>
-    <button class="resetBtn" id="replay" disabled="true" onclick="resetGame()">Play Again</button>
-    <button id="resetScore" disabled="true" onclick="resetScore()">Reset Score</button>
     <script type="text/javascript" src="D:\My Projects\tic-tac-toe\script.js"></script>
   </body>
 </html>
