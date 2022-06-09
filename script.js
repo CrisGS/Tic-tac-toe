@@ -1,6 +1,8 @@
-let moves = 1;
+let moves = 0;
 let xScore = 0;
 let oScore = 0;
+let xSign = false;
+let oSign = false;
 let currentPlayer = "X";
 let isGameOver = false;
 const currentPlayerTurn = document.getElementById("turn");
@@ -8,20 +10,35 @@ const resetButton = document.getElementById("replay");
 const gameGrid = document.getElementById('grid').getElementsByTagName('div');
 document.getElementById("xScore").innerHTML = xScore;
 document.getElementById("oScore").innerHTML = oScore;
+document.getElementById("gameContent").style.visibility = "hidden";
 
 // Asign a function to every cell in the grid.
   const cellsFunction = document.querySelectorAll('.cell').forEach(cell => cell.addEventListener("click", gameStatus));
+
+function chooseSign(clickedButton) {
+  document.getElementById("gameContent").style.visibility = "visible";
+  if (clickedButton == 1) {
+    moves = 0;
+    xSign = true;
+  } else {
+    moves = 1;
+    oSign = true;
+  }
+  document.getElementById("chooseSignMsg").style.visibility = "hidden";
+  document.getElementById("chooseSign").style.visibility = "hidden";
+}
+
 
 // Display the sign of the current player in the chosen box, counting the number of played cells and display whose player's turn it is.
 function gameStatus(clickedCellEvent) {
   if (isGameOver == false) {
     const clickedCell = clickedCellEvent.target;
     if (clickedCell.textContent == "") {
-      if (moves % 2 != 0) {
+      if (moves % 2 == 0) {
         currentPlayer = "X";
         clickedCell.innerHTML = currentPlayer;
         currentPlayerTurn.innerHTML = "O player turn";
-      } else if(moves % 2 == 0) {
+      } else if(moves % 2 != 0) {
         currentPlayer = "O";
         clickedCell.innerHTML = currentPlayer;
         currentPlayerTurn.innerHTML = "X player turn";
@@ -72,15 +89,6 @@ function winner() {
     j += 3;
   }
   
-  if (xScore > 0 || oScore > 0) {
-    document.getElementById("resetScore").disabled = false;
-  }
-  
-  // If the game is over, the reset button will be activated
-  if (xWin == true || oWin == true || (xWin == false && oWin == false)) {
-    resetButton.disabled = false;
-  }
-  
   if (xWin == true) {
     currentPlayerTurn.innerHTML = "X PLAYER WIN";
     ++xScore;
@@ -91,9 +99,26 @@ function winner() {
     ++oScore;
     document.getElementById("oScore").innerHTML = oScore;
     isGameOver = true;
-  } else if (xWin == false && oWin == false && moves === 10) {
-    currentPlayerTurn.innerHTML = "TIE";
-    isGameOver = true;
+  }
+  if (xSign == true) {
+    if (xWin == false && oWin == false && moves === 9) {
+      currentPlayerTurn.innerHTML = "TIE";
+      isGameOver = true;
+    }
+  } else if (oSign == true) {
+    if (xWin == false && oWin == false && moves === 10) {
+      currentPlayerTurn.innerHTML = "TIE";
+      isGameOver = true;
+    }
+  }
+
+  if (xScore > 0 || oScore > 0) {
+    document.getElementById("resetScore").disabled = false;
+  }
+
+  // If the game is over, the reset button will be activated
+  if (xWin == true || oWin == true || (xWin == false && oWin == false)) {
+    resetButton.disabled = false;
   }
 }
   
@@ -103,11 +128,22 @@ function resetGame () {
     gameGrid[i].innerHTML = "";
   }
   currentPlayerTurn.innerHTML = "Tic Tac Toe";
-  moves = 1;
+  moves = 0;
   isGameOver = false;
+  resetButton.disabled = "true";
+}
+
+function chooseSignAgain() {
+  document.getElementById("gameContent").style.visibility = "hidden";
+  document.getElementById("chooseSignMsg").style.visibility = "visible";
+  document.getElementById("chooseSign").style.visibility = "visible";
+  resetGame();
 }
 
 // Reset the score
 function resetScore() {
-  location.reload();
+  xScore = 0;
+  oScore = 0;
+  document.getElementById("xScore").innerHTML = xScore;
+  document.getElementById("oScore").innerHTML = oScore;
 }
