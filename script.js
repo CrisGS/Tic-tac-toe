@@ -13,8 +13,9 @@ document.getElementById("oScore").innerHTML = oScore;
 document.getElementById("gameContent").style.visibility = "hidden";
 
 // Asign a function to every cell in the grid.
-  const cellsFunction = document.querySelectorAll('.cell').forEach(cell => cell.addEventListener("click", gameStatus));
+const cellsFunction = document.querySelectorAll('.cell').forEach(cell => cell.addEventListener("click", gameStatus));
 
+// Function that let the player choose the sign he want to play with
 function chooseSign(clickedButton) {
   document.getElementById("gameContent").style.visibility = "visible";
   if (clickedButton == 1) {
@@ -56,39 +57,43 @@ function winner() {
       gameGrid[i].disabled = true;
     }
   }
-  // Variables that help me find out if the game ends in a tie
+
+  // Variables that help me find out if the game ends in a tie, or one of the player has won
   let xWin = false, oWin = false;
   let j = 0;
   for (let i = 0; i < 3; ++i) {
-    if (i == 0 && gameGrid[i].textContent == "X" && gameGrid[i + 4].textContent == "X" && gameGrid[i + 8].textContent == "X") {
+    if (i == 0 && gameGrid[i].textContent == currentPlayer && gameGrid[i + 4].textContent == currentPlayer && gameGrid[i + 8].textContent == currentPlayer) {
       xWin = true;
       break;
-    } else if (i == 0 && gameGrid[i].textContent == "O" && gameGrid[i + 4].textContent == "O" && gameGrid[i + 8].textContent == "O") {
+    } else if (i == 0 && gameGrid[i].textContent == currentPlayer && gameGrid[i + 4].textContent == currentPlayer && gameGrid[i + 8].textContent == currentPlayer) {
       oWin = true;
       break;
-    } else if (i == 2 && gameGrid[i].textContent == "X" && gameGrid[i + 2].textContent == "X" && gameGrid[i + 4].textContent == "X") {
+    } else if (i == 2 && gameGrid[i].textContent == currentPlayer && gameGrid[i + 2].textContent == currentPlayer && gameGrid[i + 4].textContent == currentPlayer) {
       xWin = true;
       break;
-    } else if (gameGrid[2].textContent == "O" && gameGrid[4].textContent == "O" && gameGrid[6].textContent == "O") {
+    } else if (gameGrid[2].textContent == currentPlayer && gameGrid[4].textContent == currentPlayer && gameGrid[6].textContent == currentPlayer) {
       oWin = true;
       break;
     }
-    if (gameGrid[j].textContent == "X" && gameGrid[j + 1].textContent == "X" && gameGrid[j + 2].textContent == "X") {
+    if (gameGrid[j].textContent == currentPlayer && gameGrid[j + 1].textContent == currentPlayer && gameGrid[j + 2].textContent == currentPlayer) {
       xWin = true;
       break;
-    } else if (gameGrid[j].textContent == "O" && gameGrid[j + 1].textContent == "O" && gameGrid[j + 2].textContent == "O") {
+    } else if (gameGrid[j].textContent == currentPlayer && gameGrid[j + 1].textContent == currentPlayer && gameGrid[j + 2].textContent == currentPlayer) {
       oWin = true;
       break;
-    } else if (gameGrid[i].textContent == "X" && gameGrid[i + 3].textContent == "X" && gameGrid[i + 6].textContent == "X") {
+    } else if (gameGrid[i].textContent == currentPlayer && gameGrid[i + 3].textContent == currentPlayer && gameGrid[i + 6].textContent == currentPlayer) {
       xWin = true;
       break;
-    } else if (gameGrid[i].textContent == "O" && gameGrid[i + 3].textContent == "O" && gameGrid[i + 6].textContent == "O") {
+    } else if (gameGrid[i].textContent == currentPlayer && gameGrid[i + 3].textContent == currentPlayer && gameGrid[i + 6].textContent == currentPlayer) {
       oWin = true;
       break;
     }
     j += 3;
   }
   
+  // Check wich player has completed a line, colum, or diagonal with the same sign
+  // Display the win message
+  // Increment and display the score for the player who won
   if (xWin == true) {
     currentPlayerTurn.innerHTML = "X PLAYER WIN";
     ++xScore;
@@ -112,6 +117,7 @@ function winner() {
     }
   }
 
+  // Activate the reset score button
   if (xScore > 0 || oScore > 0) {
     document.getElementById("resetScore").disabled = false;
   }
@@ -133,6 +139,7 @@ function resetGame () {
   resetButton.disabled = "true";
 }
 
+// Let the player choose another sign
 function chooseSignAgain() {
   document.getElementById("gameContent").style.visibility = "hidden";
   document.getElementById("chooseSignMsg").style.visibility = "visible";
