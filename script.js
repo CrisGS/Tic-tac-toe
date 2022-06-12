@@ -58,38 +58,45 @@ function winner() {
     }
   }
 
-  // Variables that help me find out if the game ends in a tie, or one of the player has won
-  let xWin = false, oWin = false;
-  let j = 0;
-  for (let i = 0; i < 3; ++i) {
-    if (i == 0 && gameGrid[i].textContent == currentPlayer && gameGrid[i + 4].textContent == currentPlayer && gameGrid[i + 8].textContent == currentPlayer) {
+  // Variables that help me find out if the game ends in a tie
+let xWin = false, oWin = false, j = 0;
+for (let i = 0; i < 3; ++i) {
+  if (i == 0 && gameGrid[i].textContent == gameGrid[i + 4].textContent && gameGrid[i + 4].textContent == gameGrid[i + 8].textContent) {
+    if (gameGrid[i + 4].textContent == 'X') {
       xWin = true;
       break;
-    } else if (i == 0 && gameGrid[i].textContent == currentPlayer && gameGrid[i + 4].textContent == currentPlayer && gameGrid[i + 8].textContent == currentPlayer) {
-      oWin = true;
-      break;
-    } else if (i == 2 && gameGrid[i].textContent == currentPlayer && gameGrid[i + 2].textContent == currentPlayer && gameGrid[i + 4].textContent == currentPlayer) {
-      xWin = true;
-      break;
-    } else if (gameGrid[2].textContent == currentPlayer && gameGrid[4].textContent == currentPlayer && gameGrid[6].textContent == currentPlayer) {
+    } else if (gameGrid[i + 4].textContent == 'O') {
       oWin = true;
       break;
     }
-    if (gameGrid[j].textContent == currentPlayer && gameGrid[j + 1].textContent == currentPlayer && gameGrid[j + 2].textContent == currentPlayer) {
+  } else if (i == 2 && gameGrid[i].textContent == gameGrid[i + 2].textContent && gameGrid[i + 2].textContent == gameGrid[i + 4].textContent) {
+    if (gameGrid[i + 2].textContent == 'X') {
       xWin = true;
       break;
-    } else if (gameGrid[j].textContent == currentPlayer && gameGrid[j + 1].textContent == currentPlayer && gameGrid[j + 2].textContent == currentPlayer) {
-      oWin = true;
-      break;
-    } else if (gameGrid[i].textContent == currentPlayer && gameGrid[i + 3].textContent == currentPlayer && gameGrid[i + 6].textContent == currentPlayer) {
-      xWin = true;
-      break;
-    } else if (gameGrid[i].textContent == currentPlayer && gameGrid[i + 3].textContent == currentPlayer && gameGrid[i + 6].textContent == currentPlayer) {
+    } else if (gameGrid[i + 2].textContent == 'O') {
       oWin = true;
       break;
     }
-    j += 3;
   }
+  if (gameGrid[j].textContent == gameGrid[j + 1].textContent && gameGrid[j + 1].textContent == gameGrid[j + 2].textContent) {
+    if (gameGrid[j + 1].textContent == 'X') {
+      xWin = true;
+      break;
+    } else if (gameGrid[j + 1].textContent == 'O') {
+      oWin = true;
+      break;
+    }
+  } else if (gameGrid[i].textContent == gameGrid[i + 3].textContent && gameGrid[i + 3].textContent == gameGrid[i + 6].textContent) {
+    if (gameGrid[i + 3].textContent == 'X') {
+      xWin = true;
+      break;
+    } else if (gameGrid[i + 3].textContent == 'O') {
+      oWin = true;
+      break;
+    }
+  }
+  j += 3;
+}
   
   // Check wich player has completed a line, colum, or diagonal with the same sign
   // Display the win message
