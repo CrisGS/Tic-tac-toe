@@ -3,7 +3,7 @@ let xScore = 0;
 let oScore = 0;
 let xSign = false;
 let oSign = false;
-let currentPlayer = "X";
+let currentPlayer;
 let isGameOver = false;
 const currentPlayerTurn = document.getElementById("turn");
 const resetButton = document.getElementById("replay");
@@ -63,35 +63,35 @@ let xWin = false, oWin = false, j = 0;
 for (let i = 0; i < 3; ++i) {
   if (i == 0 && gameGrid[i].textContent == gameGrid[i + 4].textContent && gameGrid[i + 4].textContent == gameGrid[i + 8].textContent) {
     if (gameGrid[i + 4].textContent == 'X') {
-      xWin = true;
+      isGameOver = true;
       break;
     } else if (gameGrid[i + 4].textContent == 'O') {
-      oWin = true;
+      isGameOver = true;
       break;
     }
   } else if (i == 2 && gameGrid[i].textContent == gameGrid[i + 2].textContent && gameGrid[i + 2].textContent == gameGrid[i + 4].textContent) {
     if (gameGrid[i + 2].textContent == 'X') {
-      xWin = true;
+      isGameOver = true;
       break;
     } else if (gameGrid[i + 2].textContent == 'O') {
-      oWin = true;
+      isGameOver = true;
       break;
     }
   }
   if (gameGrid[j].textContent == gameGrid[j + 1].textContent && gameGrid[j + 1].textContent == gameGrid[j + 2].textContent) {
     if (gameGrid[j + 1].textContent == 'X') {
-      xWin = true;
+      isGameOver = true;
       break;
     } else if (gameGrid[j + 1].textContent == 'O') {
-      oWin = true;
+      isGameOver = true;
       break;
     }
   } else if (gameGrid[i].textContent == gameGrid[i + 3].textContent && gameGrid[i + 3].textContent == gameGrid[i + 6].textContent) {
     if (gameGrid[i + 3].textContent == 'X') {
-      xWin = true;
+      isGameOver = true;
       break;
     } else if (gameGrid[i + 3].textContent == 'O') {
-      oWin = true;
+      isGameOver = true;
       break;
     }
   }
@@ -101,24 +101,21 @@ for (let i = 0; i < 3; ++i) {
   // Check wich player has completed a line, colum, or diagonal with the same sign
   // Display the win message
   // Increment and display the score for the player who won
-  if (xWin == true) {
+  if (isGameOver == true && currentPlayer == 'X') {
     currentPlayerTurn.innerHTML = "X PLAYER WIN";
     ++xScore;
     document.getElementById("xScore").innerHTML = xScore;
-    isGameOver = true;
-  } else if (oWin == true) {
+  } else if (isGameOver == true && currentPlayer == 'O') {
     currentPlayerTurn.innerHTML = "O PLAYER WIN";
     ++oScore;
     document.getElementById("oScore").innerHTML = oScore;
-    isGameOver = true;
-  }
-  if (xSign == true) {
-    if (xWin == false && oWin == false && moves === 9) {
+  } else if (xSign == true) {
+    if (isGameOver == false && moves === 9) {
       currentPlayerTurn.innerHTML = "TIE";
       isGameOver = true;
     }
   } else if (oSign == true) {
-    if (xWin == false && oWin == false && moves === 10) {
+    if (isGameOver == false && moves === 10) {
       currentPlayerTurn.innerHTML = "TIE";
       isGameOver = true;
     }
@@ -141,17 +138,13 @@ function resetGame () {
     gameGrid[i].innerHTML = "";
   }
   currentPlayerTurn.innerHTML = "Tic Tac Toe";
-  moves = 0;
+  if (xSign == true) {
+    moves = 0;
+  } else if (oSign == true) {
+    moves = 1;
+  }
   isGameOver = false;
   resetButton.disabled = "true";
-}
-
-// Let the player choose another sign
-function chooseSignAgain() {
-  document.getElementById("gameContent").style.visibility = "hidden";
-  document.getElementById("chooseSignMsg").style.visibility = "visible";
-  document.getElementById("chooseSign").style.visibility = "visible";
-  resetGame();
 }
 
 // Reset the score
@@ -160,4 +153,9 @@ function resetScore() {
   oScore = 0;
   document.getElementById("xScore").innerHTML = xScore;
   document.getElementById("oScore").innerHTML = oScore;
+}
+
+// Back to the main page where you can choose your sign
+function backToChooseSign() {
+  location.reload();
 }
