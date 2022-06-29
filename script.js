@@ -52,45 +52,34 @@ function gameStatus(clickedCellEvent) {
 
 // Check which player won the game.
 function winner() {
+  // Disable the cells which contain X or O
   for (let i = 0; i < gameGrid.length; ++i) {
     if (gameGrid[i].textContent == "") {
       gameGrid[i].disabled = true;
     }
   }
 
-  // Variables that help me find out if the game ends in a tie
-let xWin = false, oWin = false, j = 0;
+// Variable that help me to iterate through columns
+let j = 0;
 for (let i = 0; i < 3; ++i) {
   if (i == 0 && gameGrid[i].textContent == gameGrid[i + 4].textContent && gameGrid[i + 4].textContent == gameGrid[i + 8].textContent) {
-    if (gameGrid[i + 4].textContent == 'X') {
-      isGameOver = true;
-      break;
-    } else if (gameGrid[i + 4].textContent == 'O') {
+    if (gameGrid[i + 4].textContent == currentPlayer) {
       isGameOver = true;
       break;
     }
   } else if (i == 2 && gameGrid[i].textContent == gameGrid[i + 2].textContent && gameGrid[i + 2].textContent == gameGrid[i + 4].textContent) {
-    if (gameGrid[i + 2].textContent == 'X') {
-      isGameOver = true;
-      break;
-    } else if (gameGrid[i + 2].textContent == 'O') {
+    if (gameGrid[i + 2].textContent == currentPlayer) {
       isGameOver = true;
       break;
     }
   }
   if (gameGrid[j].textContent == gameGrid[j + 1].textContent && gameGrid[j + 1].textContent == gameGrid[j + 2].textContent) {
-    if (gameGrid[j + 1].textContent == 'X') {
-      isGameOver = true;
-      break;
-    } else if (gameGrid[j + 1].textContent == 'O') {
+    if (gameGrid[j + 1].textContent == currentPlayer) {
       isGameOver = true;
       break;
     }
   } else if (gameGrid[i].textContent == gameGrid[i + 3].textContent && gameGrid[i + 3].textContent == gameGrid[i + 6].textContent) {
-    if (gameGrid[i + 3].textContent == 'X') {
-      isGameOver = true;
-      break;
-    } else if (gameGrid[i + 3].textContent == 'O') {
+    if (gameGrid[i + 3].textContent == currentPlayer) {
       isGameOver = true;
       break;
     }
@@ -102,11 +91,11 @@ for (let i = 0; i < 3; ++i) {
   // Display the win message
   // Increment and display the score for the player who won
   if (isGameOver == true && currentPlayer == 'X') {
-    currentPlayerTurn.innerHTML = "X PLAYER WIN";
+    currentPlayerTurn.innerHTML = currentPlayer + " PLAYER WIN";
     ++xScore;
     document.getElementById("xScore").innerHTML = xScore;
   } else if (isGameOver == true && currentPlayer == 'O') {
-    currentPlayerTurn.innerHTML = "O PLAYER WIN";
+    currentPlayerTurn.innerHTML = currentPlayer + " PLAYER WIN";
     ++oScore;
     document.getElementById("oScore").innerHTML = oScore;
   } else if (xSign == true) {
@@ -127,7 +116,7 @@ for (let i = 0; i < 3; ++i) {
   }
 
   // If the game is over, the reset button will be activated
-  if (xWin == true || oWin == true || (xWin == false && oWin == false)) {
+  if (isGameOver == true) {
     resetButton.disabled = false;
   }
 }
