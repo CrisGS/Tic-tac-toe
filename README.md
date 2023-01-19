@@ -9,6 +9,6 @@ Features:
 - the possibility to choose the sign you want to play with
 - reset the game button
 
-Demo:
+Demo (this project is implemented with netlify, so anyone can interact with it):
 
-tic-tac-toe-crisgs.netlify.app (this project is implemented with netlify, so anyone can interact with it)
+tic-tac-toe-crisgs.netlify.app
